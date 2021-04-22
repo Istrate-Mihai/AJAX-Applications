@@ -1,0 +1,71 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+       
+       <label for="email">Enter your email here</label>
+       <input type="text" name="email" id="email"><br><br>
+       <input type="button" value="Search Email" onclick="search()">
+    
+    </form>
+    
+    <p id="found_Email"></p>
+
+    <script>
+       
+
+             
+ function ajaxFunction(){
+      let ajaxRequest;
+ 
+      try{ 
+         ajaxRequest = new XMLHttpRequest();
+      }catch (e){
+         try{
+            ajaxRequest = new ActiveXObject("MSXML2.XMLHTTP");
+         }catch (e) {
+            try{
+               ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+            }catch (e){
+               alert("Your browser broke!");
+               return false;
+            }
+         }
+      }
+      return ajaxRequest;
+   }
+ 
+
+  function search(){
+    let searched_email=document.forms[0].email.value;
+
+    let result=document.getElementById("found_Email");
+
+    let xhttp=ajaxFunction();
+   
+    xhttp.open("GET","emails.php?sent_Email="+searched_email,false);
+    xhttp.send(null);
+     
+
+    let  xhttpResponse = (xhttp.responseText === "1" );
+    if( xhttpResponse ){
+        result.innerHTML="This email is stored on our server!";
+    }else{
+        
+        result.innerHTML="This email is not stored on our server,please register or make sure to not introduce unwanted empty spaces!";
+    }
+       return false;
+
+
+  }
+
+    </script>
+
+
+</body>
+</html>
