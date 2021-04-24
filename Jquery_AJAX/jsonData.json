@@ -1,0 +1,27 @@
+[
+
+{
+  
+  "countryName":"Italy",
+  "capital":"Roma",
+  "landSurface":"301.340 km²"
+
+},
+
+
+{
+    "countryName":"England",
+    "capital":"London",
+    "landSurface":"130.279 km²"
+
+},
+
+
+{
+    "countryName":"Romania",
+    "capital":"Bucharest",
+    "landSurface":"238.397 km²"
+}
+
+
+]
