@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <p>Problem statement: Create an index.html file that has an input field and a button. After the user enters the value in the input space and clicks the button, the AJAX request to the response.php file is executed. This file processes the text that was entered by the user so that the md5 code is generated. This code is returned on the page as an AJAX response and is presented by alert ().</p>
+    <p id="response"></p>
+    
+  <form>
+   <label for="myInput">Enter your data here: </label>
+   <input type="text" id="myInput">
+   <br><br>
+   <input type="button" value="Send Data">  
+
+</form>
+
+<script type="text/javascript"> 
+
+$(document).ready(function(){
+ 
+$(":button").click(function(){
+     
+      var inputSent="input="+$("#myInput").val();
+
+     $("#response").load("app2_load_method.php",inputSent,function(response){
+ 
+          $(this).text(response);
+
+     });
+
+});
+
+});
+
+
+</script>
+
+<noscript>Turn on javascript in your browser for the app to work!</noscript>
+</body>
+</html>
