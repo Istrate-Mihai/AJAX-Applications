@@ -1,0 +1,105 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      table,th,td{
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+
+      th {
+       text-align: center;
+      }
+      th,td {
+          padding: 5px;
+      }
+ 
+
+
+
+    </style>
+</head>
+<body>
+    <button onclick="process_catalog_request()">Click to display countries</button>
+    <div id="resultTable"></div> 
+    
+    <script>
+
+
+                        function ajaxFunction(){
+                            let ajaxRequest;
+                        
+                            try{ 
+                                ajaxRequest = new XMLHttpRequest();
+                            }catch (e){
+                                try{
+                                    ajaxRequest = new ActiveXObject("MSXML2.XMLHTTP");
+                                }catch (e) {
+                                    try{
+                                    ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                                    }catch (e){
+                                    alert("Your browser broke!");
+                                    return false;
+                                    }
+                                }
+                            }
+                            return ajaxRequest;
+                        }
+
+
+var connXML = ajaxFunction();
+
+
+                    function process_catalog_request(){
+
+                        connXML.onreadystatechange = function(){
+                                
+                            if( connXML.readyState === 4 && connXML.status === 200 ){
+                                
+                                let xmlContent = connXML.responseXML;
+                                   
+                                showCatalog(xmlContent);            
+                            }
+                        }
+
+                    connXML.open("GET","countries.xml",true);
+                    connXML.send(null);
+                    }
+
+
+
+            function showCatalog(param){
+                let i;
+                let countryName,capitalName,imageName;
+                let countryData = param.getElementsByTagName("country"); 
+                let countryTable = "<table>";
+                let result = document.getElementById("resultTable");
+                    
+                countryTable+="<tr> <th>Country Name</th> <th>Capital Name</th> <th>Capital Image</th> </tr>";   
+                    
+                for( i =0 ; i < countryData.length ; i++ ){
+                   
+                    countryName = countryData[i].getElementsByTagName("name")[0];
+                    capitalName = countryData[i].getElementsByTagName("capital")[0];
+                    imageName = countryData[i].getElementsByTagName("image")[0];
+                  
+                    let capitalImage="<img width=\"200px\" height=\"200px\"  src=\"countries_app_images/"+imageName.childNodes[0].nodeValue+"\">"; 
+                  
+                    
+                    countryTable+="<tr><td>" + countryName.childNodes[0].nodeValue + "</td><td>" + capitalName.childNodes[0].nodeValue + "</td><td>"+capitalImage+"</td></tr>";
+
+
+                }
+                countryTable+="</table>";
+                result.innerHTML = countryTable;
+            }
+
+                
+             
+
+    </script>
+</body>
+</html>
